@@ -1,0 +1,21 @@
+name: moca-core
+label: Moca Core
+kind: standalone
+version: 0.1.0
+description: >
+  Ponte entre o gateway WhatsApp do profile bmoca e a app Moca (SQLite). Expõe somente
+  as ferramentas moca_* (toolset "moca"), injeta o contexto de identidade (vindo do adaptador,
+  nunca do texto) e bloqueia qualquer outra ferramenta em sessões WhatsApp.
+author: Filipe Lopes, Hermes Agent
+provides_tools:
+  - moca_contexto
+  - moca_quem_sou
+  - moca_registrar_feedback
+  - moca_corrigir_feedback
+  - moca_buscar_orientacoes
+  - moca_abrir_caso
+  - moca_meus_casos
+  - moca_responder_caso
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call

@@ -38,3 +38,25 @@ skills/.usage.json
 skills/.usage.json.lock
 **/__pycache__/
 *.pyc
+
+# Estado local adicional já presente
+.skills_prompt_snapshot.json
+backups/
+context_length_cache.yaml
+data/
+logs/
+models_dev_cache.etag
+models_dev_cache.json
+pending/
+platforms/
+plugin-update-checks/
+plugins/.install-metadata.json
+plugins/.install-metadata.json.lock
+processes.json
+provider_models_cache.json
+source-checks/
+state.db.auto-maintenance.lock
+state.db.fts_rebuild.lock
+state.db.quarantine.lock
+telegram_update_receipts_8312765880.json
+whatsapp/
