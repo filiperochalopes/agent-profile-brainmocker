@@ -1,0 +1,1 @@
+/Users/filipelopes/.hermes/profiles/bmoca/scripts/arquivar_escola_diario.py

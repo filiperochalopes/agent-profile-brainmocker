@@ -1,0 +1,9 @@
+Evolution API (wpp.orango.io): group "Equipe Pedagógica" JID 120363430465100909@g.us, sent via instance name "Robson - Pessoal" (URL-encode the space as %20). fetchInstances returns the instance name under the key `name`, not `instanceName`. Scratch client: /Users/filipelopes/.hermes/profiles/bmoca/cache/scratch/evo.py, call(method, path, body).
+§
+Profile bmoca: plugin hermes-session-reset-policy ativo, session_reset daily at_hour 0 (meia-noite GMT-3, fuso America/Bahia). Patch local em plugins/hermes-session-reset-policy/__init__.py restringe o reset a platform telegram; perdido se o plugin for atualizado/reinstalado (reaplicar o filtro).
+§
+BMoca: feedbacks/atas no SQLite via CLI `moca` (app/, skill feedback-atas). Acesso Telegram à Evolution API via evo_guard.py + policies/evolution_access.json (Filipe 1556914128 admin; Robson 1106796150 e Lorena 1104815252 só suas instâncias). transcribe-whisper exige env limpo (env -u VIRTUAL_ENV -u PYTHONPATH...) por erro de NumPy.
+§
+Métrica do grupo: custo por criança por dia (R$) = total de gastos ÷ (nº de dias de encontro × nº de crianças). Dia = dia efetivo de encontro. Usada para projetar custo total e ajuda de custo por família. Gastos recebidos (Telegram/WhatsApp) vão para docs/financeiro/gastos_staging.csv até a planilha Google Workspace ser definida (pendente, Filipe trará). Doc: no banco (document reference "Custo por criança por dia"; ver `moca docs list --type reference`).
+§
+Refatoração SQLite do bmoca: app/ (uv, Py3.12, SQLAlchemy+Alembic); models em app/src/moca/db/models.py; plano e casos de uso em app/docs/. WhatsApp nativo restrito em 24/10/2026: allowlist = 19 números do cadastro, desconhecidos ignorados, /comandos só Filipe. 1º `gateway restart` do bmoca pode falhar no WhatsApp; o 2º conecta.

@@ -1,0 +1,112 @@
+model:
+  default: gemini-3.1-flash-lite-preview
+  provider: gemini
+  base_url: https://generativelanguage.googleapis.com/v1beta
+_config_version: 50
+onboarding:
+  seen:
+    profile_build_offered: true
+    busy_input_prompt: true
+    tool_progress_prompt: true
+skills:
+  disabled:
+    - findmy
+    - imessage
+    - claude-code
+    - codex
+    - opencode
+    - architecture-diagram
+    - ascii-video
+    - baoyu-infographic
+    - claude-design
+    - manim-video
+    - p5js
+    - popular-web-designs
+    - songwriting-and-ai-music
+    - email-inbox-triage
+    - gif-search
+    - songsee
+    - obsidian
+    - airtable
+    - box
+    - maps
+    - meeting-action-items
+    - notion
+    - powerpoint
+    - product-price-monitor
+    - teams-meeting-pipeline
+    - weekly-review-planning
+    - arxiv
+    - competitor-news-monitor
+    - llm-wiki
+    - codebase-inspection
+    - dogfood
+    - github
+    - node-inspect-debugger
+    - python-debugpy
+    - requesting-code-review
+    - simplify-code
+    - spike
+    - systematic-debugging
+    - test-driven-development
+    - blocked-page-recovery
+  platform_disabled:
+    telegram:
+      - google-workspace
+    whatsapp:
+      - moca-operacao
+stt:
+  local:
+    model: turbo
+    language: pt
+plugins:
+  enabled:
+    - hermes-session-reset-policy
+    - moca-core
+  disabled: []
+session_reset:
+  mode: daily
+  at_hour: 0
+agent:
+  reasoning_effort: medium
+approvals:
+  destructive_slash_confirm: false
+whatsapp:
+  unauthorized_dm_behavior: ignore
+  allow_admin_from:
+    - 557192540736@s.whatsapp.net
+    - 3801062891633@lid
+  user_allowed_commands: []
+  group_allow_admin_from:
+    - 557192540736@s.whatsapp.net
+    - 3801062891633@lid
+  group_user_allowed_commands: []
+  reply_prefix: 'Moca falando aqui: '
+platform_toolsets:
+  whatsapp:
+    - moca
+logging:
+  max_size_mb: 10
+  backup_count: 200
+display:
+  platforms:
+    whatsapp:
+      tool_progress: 'off'
+      interim_assistant_messages: false
+      long_running_notifications: false
+      busy_ack_detail: false
+      suppress_warning_notifications: true
+      busy_steer_ack_enabled: false
+  busy_input_mode: steer
+platforms:
+  whatsapp:
+    channel_overrides:
+      120363429552702512@g.us:
+        model: deepseek/deepseek-v4.1-flash-1017
+        provider: openrouter
+      3801062891633@lid:
+        model: deepseek/deepseek-v4.1-flash-1017
+        provider: openrouter
+fallback_providers:
+  - provider: gemini
+    model: gemini-3.1-flash-lite-preview

@@ -1,0 +1,9 @@
+{
+  "_doc": "Política de acesso à Evolution API por usuário do Telegram. Padrão: negar. 'instances' usa o nome exato da instância.",
+  "trusted_platforms": ["cron", "cli", "desktop", "tui", "local"],
+  "telegram_users": {
+    "1556914128": {"nome": "Filipe", "role": "admin"},
+    "1106796150": {"nome": "Robson Cardoso", "role": "user", "instances": ["Robson - Pessoal"]},
+    "1104815252": {"nome": "Lorena", "role": "user", "instances": ["Lorena - Pessoal"]}
+  }
+}

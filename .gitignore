@@ -1,0 +1,40 @@
+# Credenciais e sessões locais existentes
+.env
+.env.lock
+auth.json
+auth.lock
+google_client_secret.json
+google_token.json
+whatsapp/session/
+
+# Bancos SQLite e arquivos auxiliares binários
+*.db
+*.db-*
+
+# Estado transitório e conteúdo privado de conversas
+cache/
+runtime/
+sessions/
+desktop/
+attachments/
+data/audit/
+
+# Artefatos locais já presentes, não são regras do profile
+.codex_gpt55_autoraise_notice
+.curator_backups/
+cron/*.lock
+cron/output/
+cron/ticker_heartbeat
+cron/ticker_last_success
+cron/usage_audit.jsonl
+memories/*.lock
+policies/evolution_audit.jsonl
+skills/.bundled_manifest
+skills/.curator_ledger.jsonl
+skills/.curator_state
+skills/.hub/
+skills/.locks/
+skills/.usage.json
+skills/.usage.json.lock
+**/__pycache__/
+*.pyc
