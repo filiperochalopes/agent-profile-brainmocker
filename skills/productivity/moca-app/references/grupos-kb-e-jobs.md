@@ -2,7 +2,7 @@
 
 ## Plano vigente, ainda não implantado
 
-Consultar `$PROFILE/app/docs/PLANO_EDITE_GRUPOS_KB_JOBS.md` antes de implementar interação em grupo ou migrar jobs. Decisões do usuário: apresentação **Edite** no WhatsApp; retirar prefixo de WhatsApp/Telegram mediante migração coordenada; triar mensagens sem exigir menção somente na Escola Sem Nome; estudar envios e coleta pelo número dedicado. Não tratar essas decisões como confirmação de implantação. A app ainda exige prefixo em outbox; não removê-lo isoladamente dos jobs e causar falhas.
+Consultar `$PROFILE/app/docs/PLANO_EDITE_GRUPOS_KB_JOBS.md` antes de implementar interação em grupo ou migrar jobs. Decisão vigente: MVP acionado por menção nativa à Edite somente na Escola Sem Nome, inclusive em resposta citada à pergunta de terceiro. Triagem proativa sem menção está adiada. Apresentação Edite e retirada do prefixo continuam previstas; não tratar como implantação concluída. Consulta da agenda e migração de jobs são integrações separadas. A agenda Google Projeto Educacional já foi criada em outra sessão: revalidar ID, fuso e eventos pela API, não presumir que está preenchida ou integrada. O plano contém a identificação e a verificação. Não remover prefixo isoladamente enquanto houver validações legadas na app.
 
 ## Regras de implementação aprendidas
 

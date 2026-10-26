@@ -10,7 +10,7 @@
 
 ## Receitas
 - Alembic: `uv run alembic -x url=sqlite:////caminho/scratch.db revision --autogenerate --rev-id 0001`; `env.py` aceita `-x url=`, `sqlalchemy.url` ou `load_settings()`. O autogenerate NÃO emite o índice funcional parcial `uq_document_idempotency_key` nem o import de `moca.db.models` (UTCDateTime): acrescente à mão (`op.execute(CREATE UNIQUE INDEX ... WHERE ...)` e DROP no downgrade).
-- Settings sobrescrevíveis por env para testes/validação: `MOCA_PROFILE_HOME`, `MOCA_CONFIG_DIR`, `MOCA_DB_FILE`, `MOCA_MIGRATION_DIR`.
+- Settings sobrescrevíveis por env para testes/validação: `MOCA_PROFILE_HOME`, `MOCA_CONFIG_DIR`, `BMOCA_APP_DB_FILE`, `MOCA_MIGRATION_DIR`.
 - Testes: fixtures `profile_home` → `settings` → `engine` (Alembic em arquivo temporário) → `session`; `tests/helpers.py` monta duas famílias sintéticas, equipe e atribuição. Teste do plugin carrega o pacote por `importlib` com `submodule_search_locations`.
 - Ruff: ignore `E501`/`RUF001-003` no pyproject (formatador não quebra strings; textos em português). Rode `ruff check --fix --unsafe-fixes` e depois `ruff format` (o formatter reescreve arquivos: releia antes de `write_file`, que recusa escrita sobre arquivo modificado).
 - `write_file` recusa sobrescrever arquivo existente não lido nesta tarefa: para arquivos do `uv init` (`__init__.py`, `.gitignore`) use `patch` ou leia antes.
@@ -28,7 +28,7 @@
 - Sessão longa de WhatsApp acumula respostas falsas ("registrei") que o modelo imita e fica sem as ferramentas novas do plugin (carregadas só em sessão nova): após mudar plugin/regras, o admin manda `/new`; considere reset diário também no WhatsApp (o patch local do reset restringe a Telegram).
 - Retenção de logs: o Hermes rotaciona por tamanho (padrão 5 MB × 3 apaga em dias). Configure `logging.max_size_mb`/`backup_count` altos e use `scripts/rotate_logs_archive.py` (cron `no_agent` diário) para gzipar em `logs/archive/` os segmentos `*.log.N` com mais de 90 dias; nunca mexa no arquivo ativo.
 - Idempotência no piloto: registros distintos têm `message_id` distinto na chave `feedback:wa:<chat>:<msg>:<criança>`; "registro duplo" = mesma chave/texto repetida, confira por `idempotency_key` no banco.
-- Piloto: banco `MOCA_DB_FILE=moca_test.db` (famílias `[TESTE]`) + arquivo marcador `plugins/moca-core/PILOTO`; `gateway restart` pode responder "pending" e conectar ~40 s depois.
+- Piloto: banco `BMOCA_APP_DB_FILE=moca_test.db` (famílias `[TESTE]`) + arquivo marcador `plugins/moca-core/PILOTO`; `gateway restart` pode responder "pending" e conectar ~40 s depois.
 
 ## Armadilhas de domínio
 - Casar telefone→adulto: tokens do apelido ⊆ tokens do nome de EXATAMENTE um adulto (sem acentos/emojis); caso contrário REVISAR com sugestão só como proposta. Máscara de telefone pode colidir entre famílias: chave de decisão = (família, telefone mascarado).

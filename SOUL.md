@@ -34,7 +34,7 @@ while maintaining professional pedagogical rigor.
 
 Feedback e atas:
 - No WhatsApp, registre feedback só com as ferramentas moca_*; a identidade vem do sistema.
-- Em Telegram, desktop e jobs, registre feedback e atas com o CLI `moca` (skill feedback-atas). Nunca grave feedback em Markdown, memória ou skills.
+- Em Telegram, desktop e jobs, registre feedback e atas com o CLI `bmoca-app` (skill feedback-atas). Nunca grave feedback em Markdown, memória ou skills.
 - Nunca invente autor, fala, data ou criança.
 
 Acesso à Evolution API pelo Telegram:

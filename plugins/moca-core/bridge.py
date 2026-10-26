@@ -1,4 +1,4 @@
-"""Ponte para a app Moca: chama `moca tool <nome>` em subprocesso com identidade só do adaptador."""
+"""Ponte para a BMoca App: chama `bmoca-app tool <nome>` em subprocesso com identidade só do adaptador."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ logger = logging.getLogger("moca-core")
 
 PROFILE = Path(__file__).resolve().parents[2]
 APP = PROFILE / "app"
-MOCA_BIN = APP / ".venv" / "bin" / "moca"
+BMOCA_APP_BIN = APP / ".venv" / "bin" / "bmoca-app"
 PILOT_MARKER = Path(__file__).resolve().parent / "PILOTO"
 
 INTERNAL_ERROR = {
@@ -25,13 +25,13 @@ INTERNAL_ERROR = {
 }
 
 _SESSION_VARS = {
-    "MOCA_CALLER_PLATFORM": "HERMES_SESSION_PLATFORM",
-    "MOCA_CALLER_USER_ID": "HERMES_SESSION_USER_ID",
-    "MOCA_CALLER_USER_ID_ALT": "HERMES_SESSION_USER_ID_ALT",
-    "MOCA_CALLER_CHAT_ID": "HERMES_SESSION_CHAT_ID",
-    "MOCA_CALLER_CHAT_TYPE": "HERMES_SESSION_CHAT_TYPE",
-    "MOCA_CALLER_MESSAGE_ID": "HERMES_SESSION_MESSAGE_ID",
-    "MOCA_CALLER_SESSION_ID": "HERMES_SESSION_ID",
+    "BMOCA_APP_CALLER_PLATFORM": "HERMES_SESSION_PLATFORM",
+    "BMOCA_APP_CALLER_USER_ID": "HERMES_SESSION_USER_ID",
+    "BMOCA_APP_CALLER_USER_ID_ALT": "HERMES_SESSION_USER_ID_ALT",
+    "BMOCA_APP_CALLER_CHAT_ID": "HERMES_SESSION_CHAT_ID",
+    "BMOCA_APP_CALLER_CHAT_TYPE": "HERMES_SESSION_CHAT_TYPE",
+    "BMOCA_APP_CALLER_MESSAGE_ID": "HERMES_SESSION_MESSAGE_ID",
+    "BMOCA_APP_CALLER_SESSION_ID": "HERMES_SESSION_ID",
 }
 
 
@@ -47,9 +47,13 @@ def session_env(name: str) -> str:
 def build_env() -> dict[str, str]:
     """Ambiente MÍNIMO: nada do ambiente do Hermes além do necessário."""
     env = {"PATH": "/usr/bin:/bin", "HOME": os.environ.get("HOME", ""), "LANG": "C.UTF-8"}
-    for moca_var, hermes_var in _SESSION_VARS.items():
-        env[moca_var] = session_env(hermes_var)
+    for bmoca_var, hermes_var in _SESSION_VARS.items():
+        value = session_env(hermes_var)
+        env[bmoca_var] = value
+        # Keep the legacy adapter contract available during the migration.
+        env[bmoca_var.replace("BMOCA_APP_", "MOCA_")] = value
     if PILOT_MARKER.exists():
+        env["BMOCA_APP_DB_FILE"] = "moca_test.db"
         env["MOCA_DB_FILE"] = "moca_test.db"
     return env
 
@@ -57,7 +61,7 @@ def build_env() -> dict[str, str]:
 def call_moca(tool_name: str, args: dict) -> dict:
     try:
         proc = subprocess.run(
-            [str(MOCA_BIN), "tool", tool_name],
+            [str(BMOCA_APP_BIN), "tool", tool_name],
             input=json.dumps(args, ensure_ascii=False),
             capture_output=True,
             text=True,

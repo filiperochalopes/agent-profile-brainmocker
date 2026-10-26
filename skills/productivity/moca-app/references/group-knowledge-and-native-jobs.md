@@ -7,7 +7,7 @@
 4. Inspecione `config.yaml`, `app/config/channels.toml`, o plugin e a CLI com saídas mínimas. Leia segredos apenas no processo autorizado, nunca para a auditoria. Não abra `moca.db` diretamente.
 
 ## 2. Definir o contrato público da KB
-1. Descubra o que a app já oferece em `services/knowledge.py`, ferramentas `moca_*` e comandos `moca guidance --help` / `moca docs --help`. Não trate um documento `reference` ou uma ata como automaticamente publicável.
+1. Descubra o que a app já oferece em `services/knowledge.py`, ferramentas `moca_*` e comandos `bmoca-app guidance --help` / `bmoca-app docs --help`. Não trate um documento `reference` ou uma ata como automaticamente publicável.
 2. Proponha fatos curtos e recuperáveis por assunto: próximo encontro, horário, local, link do mapa, materiais e avisos confirmados. Separe o local padrão de exceções por encontro.
 3. Para cada fato, especifique valor, fonte identificável, origem, público/grupo autorizado, confirmação, vigência e substituição/revogação. Use estruturas existentes e `document.provenance`; não invente tabelas ou campos físicos sem aprovação.
 4. Autorize a recuperação ANTES de entregar trechos ao modelo. Uma regra no prompt para não divulgar não substitui o filtro de acesso.
@@ -15,12 +15,15 @@
 6. Publique decisões oriundas da equipe como fatos aprovados para as famílias, não como resumo automático de toda a conversa interna. Remover nomes não torna conteúdo sensível público.
 7. Evite um log público de perguntas: dúvidas podem conter saúde, conflitos ou dados familiares. Prefira métricas mínimas de intenção/resultado sem corpo; mantenha eventuais fontes restritas com retenção definida.
 
-## 3. Projetar a triagem econômica
+## 3. Projetar o acionamento econômico por menção
+
+O MVP vigente foi simplificado para menção nativa: não implantar o classificador de toda conversa. Use chamada + pergunta citada + agenda/KB autorizada; contexto vizinho é opcional e não deve bloquear o piloto. Agenda criada não comprova eventos existentes nem integração com ferramentas; recuperar a referência de criação na sessão e confirmar por API. Descrições de eventos só viram KB após regra editorial de público; não retornar convidados ou notas internas.
+
 1. Valide plataforma, JID e identidade fornecidos pelo adaptador; nunca os deduza de texto. A allowlist de grupos do gateway não substitui a autorização de pessoas nas ferramentas.
-2. Antes do agente completo, descarte eventos próprios/duplicados, reações e mensagens claramente não acionáveis. O requisito é avaliar mensagens sem menção, não chamar o LLM em todas elas.
-3. Reconheça perguntas logísticas também sem `?` e sem nome do bot. Para intenção conhecida + fato público válido, prefira resposta por template sem LLM.
+2. Antes do agente, descarte eventos próprios/duplicados e mensagens sem menção nativa. Não chamar LLM, STT ou visão em mensagens comuns; conferir exceções do adapter e vias busy/steer.
+3. Mensagem de terceiro respondida por outra pessoa com menção deve preservar o texto citado. Só digitar nome/número não garante marcação; nomes salvos diferentes funcionam pela identidade da menção. Não assumir contexto ao redor ou futuro. Sem pergunta citada inteligível, pedir esclarecimento.
 4. Quando interpretação for necessária, proponha uma chamada curta e limitada com a pergunta e poucos fatos autorizados. Verifique a API suportada de `ctx.llm` e a configuração de modelo auxiliar; não assuma que a chamada auxiliar usa um modelo barato por padrão.
-5. Sem fonte suficiente, assunto fora do escopo ou conteúdo privado: silêncio na conversa espontânea. Não crie casos, feedbacks nem publicações como efeito colateral da mera triagem.
+5. Em chamada explícita sem fonte suficiente, informar a ausência ou limitação sem inventar nem repetir conteúdo sensível. Não criar casos, feedbacks nem publicações como efeito colateral da consulta. Sem menção, encerrar antes do agente em vez de depender de `[SILENT]`.
 6. Defina deduplicação, limite de respostas, teste de pergunta já respondida e retenção do buffer para evitar loops e repetição. Em gateway compartilhado, particione o buffer por profile/plataforma/chat.
 7. Verifique o silêncio no runtime, não apenas no prompt: `gateway/response_filters.py` reconhece `[SILENT]`, mas o contrato de `silence_allowed` também depende de `reply_expected=False` ou evento interno. Prefixar o marcador com texto o descaracteriza. Consulte a skill `hermes-agent` e carregue nela a referência de hardening do gateway de mensagens.
 
@@ -35,7 +38,7 @@
 8. Confirme se resumos diários e semanais para o mesmo público são desejados; não pause nenhum por inferência.
 
 ## 5. Critérios para sair do planejamento
-- Testes offline: pergunta com e sem menção, sem pontuação, mensagem social, informação ausente/vencida/conflitante, tentativa de acesso privado e JID não autorizado.
+- Testes offline: chamada com menção, resposta citada à pergunta de terceiro, nome salvo diferente, ausência de menção sem LLM, informação ausente/vencida/conflitante, tentativa de acesso privado e JID não autorizado.
 - Testes de autorização: KB da equipe nunca aparece na consulta das famílias sem publicação; ferramenta continua restrita mesmo quando o gateway admite o grupo inteiro.
 - Testes de silêncio: nada de marcador, prefixo, aviso de ferramenta ou fallback visível nas mensagens ignoradas; medir chamadas ao modelo, não estimar economia sem dados.
 - Testes de coleta: janela completa, duplicatas, reinício/desconexão, mensagens próprias e mídias; ausência de cobertura deve ser explícita.

@@ -1,4 +1,3 @@
 #!/bin/zsh
-set -u
-OUT=$(/usr/bin/python3 /Users/filipelopes/.hermes/profiles/bmoca/scripts/rotate_logs_archive.py 2>&1) || { echo "⚠️ Arquivamento de logs da Moca FALHOU: $OUT"; exit 0; }
-exit 0
+# Legacy compatibility wrapper; use bmoca_app_rotate_logs.sh.
+exec "$(dirname "$0")/bmoca_app_rotate_logs.sh" "$@"

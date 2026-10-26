@@ -21,7 +21,7 @@ Use the local Keychain helper to retrieve the Evolution API credential, then acc
 - Proibido no Telegram: usar `evo.py`, ler a chave no Keychain, chamar a API com curl/urllib, ou ler/editar `policies/`. Se o guarda responder `NEGADO`, informe a recusa ao usuário e pare; não contorne.
 - Permissões atuais: Filipe `1556914128` = admin; Robson `1106796150` = só `Robson - Pessoal`; Lorena `1104815252` = só `Lorena - Pessoal`. Novos usuários: só o Filipe autoriza, editando o JSON de política.
 - Jobs de cron e sessões locais (desktop/CLI) do Filipe continuam usando `evo.py`. O guarda trata a plataforma `cron`/`desktop`/`cli` como confiável (`trusted_platforms`) e nega sessão sem identidade; um limite real exigiria perfil/bot sem terminal, pois o guarda só vale por convenção enquanto o agente tiver terminal e Keychain.
-- Autorizar novo usuário do Telegram = (1) `hermes -p bmoca config set TELEGRAM_ALLOWED_USERS <lista com o novo ID>` + reiniciar o gateway, (2) entrada em `policies/evolution_access.json`, (3) mapeamento Telegram → pessoa em `app/config/identities.toml` (pessoa cadastrada no banco via `moca people`).
+- Autorizar novo usuário do Telegram = (1) `hermes -p bmoca config set TELEGRAM_ALLOWED_USERS <lista com o novo ID>` + reiniciar o gateway, (2) entrada em `policies/evolution_access.json`, (3) mapeamento Telegram → pessoa em `app/config/identities.toml` (pessoa cadastrada no banco via `bmoca-app people`).
 
 ## Roteamento por remetente do Telegram
 
