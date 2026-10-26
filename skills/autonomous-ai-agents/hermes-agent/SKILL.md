@@ -106,6 +106,7 @@ Use this when a user wants to declutter one profile without deleting skills or n
 
 | User wants... | Load |
 |---|---|
+| Version a profile in Git; package/distribute it; create a safe `.gitignore`; resolve nested repositories | `references/profile-versioning.md` + docs: `/user-guide/profile-distributions` |
 | **Anything not listed below — "can Hermes do X?", "how do I set up X?"** | **https://hermes-agent.nousresearch.com/docs/llms.txt** |
 | Bots that chat, run routines, or message each other; the Bots tab | docs: `/user-guide/bot-mode` |
 | CLI commands, subcommands, flags, "how do I run X" | `references/cli-reference.md` |
